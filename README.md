@@ -34,7 +34,9 @@ Visit `http://localhost:3000`.
    auto-detects as Next.js — no changes needed.
 3. Add environment variables (Project → Settings → Environment Variables):
    - `NEXT_PUBLIC_SITE_URL` — your real production domain, e.g. `https://abdullahwagih.com`
-   - `RESEND_API_KEY` — optional, enables the contact form to actually send email (see §5)
+   - Contact form email delivery (optional, pick one — see §3 for full setup steps):
+     - `GMAIL_USER` + `GMAIL_APP_PASSWORD` — works immediately, no domain needed, **or**
+     - `RESEND_API_KEY` (+ verified domain) — more "branded" but requires DNS setup
    - `CONTACT_TO_EMAIL` — optional, defaults to `abdullawagih1@gmail.com`
 4. Deploy. Vercel will run `npm run build` automatically.
 
@@ -53,12 +55,50 @@ See `.env.example`. Copy it to `.env.local` for local development.
 | Variable               | Required | Purpose                                                        |
 | ----------------------- | -------- | ---------------------------------------------------------------- |
 | `NEXT_PUBLIC_SITE_URL`  | Yes (prod) | Canonical URL, sitemap, Open Graph metadata                    |
-| `RESEND_API_KEY`        | No       | Enables real email delivery from the contact form via Resend    |
-| `CONTACT_TO_EMAIL`      | No       | Overrides the inbox the contact form sends to                   |
+| `GMAIL_USER`            | No       | Gmail address to send contact-form emails from (Option A below)  |
+| `GMAIL_APP_PASSWORD`    | No       | Gmail App Password for that address (**not** your normal password) |
+| `RESEND_API_KEY`        | No       | Enables email delivery via Resend instead of Gmail (Option B)   |
+| `EMAIL_FROM`            | No       | Custom "From" address for Resend — only once its domain is verified |
+| `CONTACT_TO_EMAIL`      | No       | Overrides the inbox contact-form submissions are delivered to    |
 
-Without `RESEND_API_KEY`, the contact form still validates input correctly but
-tells the visitor email delivery isn't configured yet and offers a `mailto:`
-fallback button — it never silently pretends a message was sent.
+Without any email provider configured, the contact form still validates
+input correctly but tells the visitor email delivery isn't set up yet and
+offers a `mailto:` fallback button — it never silently pretends a message
+was sent. `src/lib/email.ts` picks whichever provider is configured; if both
+are set, Gmail takes priority.
+
+### Option A — Gmail SMTP (recommended if you don't have a domain)
+
+Works immediately, no domain or DNS setup required. Emails arrive "from"
+your own Gmail address.
+
+1. Enable **2-Step Verification** on the Google account, if not already on:
+   <https://myaccount.google.com/security>
+2. Generate an App Password (type: Mail) at
+   <https://myaccount.google.com/apppasswords>
+3. Set `GMAIL_USER` to the Gmail address and `GMAIL_APP_PASSWORD` to the
+   16-character app password (not the regular account password).
+
+### Option B — Resend
+
+More "branded" long-term, but **requires a verified sending domain**.
+Resend's shared `onboarding@resend.dev` test address is heavily restricted
+and will fail for most recipients — don't rely on it beyond a first smoke test.
+
+1. Create a free account at <https://resend.com>.
+2. Get an API key from the dashboard and set `RESEND_API_KEY`.
+3. Go to **Domains → Add Domain**, add a domain or subdomain you own (a
+   subdomain like `mail.yourdomain.com` works fine if you don't want to touch
+   your main domain).
+4. Add the DNS records Resend gives you (SPF/TXT, DKIM, sometimes MX) at your
+   domain provider (Cloudflare, Namecheap, GoDaddy, etc.), then click
+   **Verify** in Resend. This can take a few minutes to an hour.
+5. Once the domain shows **Verified**, set `EMAIL_FROM` to an address on
+   that domain, e.g. `EMAIL_FROM="Abdullah Wagih <contact@yourdomain.com>"`.
+
+Both providers have a request timeout (8–10s) built in, so a network hiccup
+fails fast with a clear error message instead of leaving the visitor staring
+at an infinite spinner.
 
 ---
 

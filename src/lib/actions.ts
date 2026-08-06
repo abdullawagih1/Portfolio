@@ -1,6 +1,6 @@
 "use server";
 
-import { siteConfig } from "@/content/site";
+import { sendContactEmail, getConfiguredProvider } from "@/lib/email";
 
 export type ContactFormState = {
   status: "idle" | "success" | "error" | "not-configured";
@@ -29,12 +29,9 @@ export async function submitContactForm(
     return { status: "error", message: "Please enter a valid email address." };
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO_EMAIL || siteConfig.email;
-
   // No email provider configured yet — validate and let the client offer a
   // mailto fallback instead of silently pretending the message was sent.
-  if (!apiKey) {
+  if (getConfiguredProvider() === "none") {
     return {
       status: "not-configured",
       message:
@@ -42,34 +39,14 @@ export async function submitContactForm(
     };
   }
 
-  try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: "Portfolio Contact <onboarding@resend.dev>",
-        to: [to],
-        reply_to: email,
-        subject: `New inquiry: ${reason} — ${name}`,
-        text: `Name: ${name}\nEmail: ${email}\nCompany: ${company || "—"}\nReason: ${reason}\n\n${message}`,
-      }),
-    });
+  const result = await sendContactEmail({ name, email, company, reason, message });
 
-    if (!res.ok) {
-      return {
-        status: "error",
-        message: "Something went wrong sending your message. Please try again or email directly.",
-      };
-    }
-
-    return { status: "success", message: "Message sent — thank you. I'll get back to you soon." };
-  } catch {
+  if (!result.ok) {
     return {
       status: "error",
       message: "Something went wrong sending your message. Please try again or email directly.",
     };
   }
+
+  return { status: "success", message: "Message sent — thank you. I'll get back to you soon." };
 }
