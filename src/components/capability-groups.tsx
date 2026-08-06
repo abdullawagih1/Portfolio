@@ -6,7 +6,7 @@ export function CapabilityGroups() {
     <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {skillGroups.map((group, i) => (
         <Reveal key={group.title} delay={i * 0.04}>
-          <div className="h-full rounded-2xl border border-line p-6 dark:border-line-dark">
+          <div className="h-full rounded-2xl border border-line p-6 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-primary-300 hover:shadow-md hover:shadow-primary-900/5 dark:border-line-dark dark:hover:border-primary-700">
             <h3 className="font-display text-[14px] font-semibold uppercase tracking-[0.06em] text-primary-700 dark:text-primary-300">
               {group.title}
             </h3>

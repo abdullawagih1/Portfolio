@@ -7,7 +7,7 @@ export function ProjectCard({ project, featured = false }: { project: Project; f
   return (
     <Link
       href={`/work/${project.slug}`}
-      className="card-blueprint group flex h-full flex-col border p-6 transition-colors hover:border-primary-400 sm:p-7"
+      className="card-blueprint group flex h-full flex-col border p-6 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-[1.015] hover:border-primary-400 hover:shadow-lg hover:shadow-primary-900/5 sm:p-7"
     >
       <div className="flex items-start justify-between gap-3">
         <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-faint dark:text-ink-inverse/40">

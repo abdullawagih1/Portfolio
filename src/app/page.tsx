@@ -1,6 +1,7 @@
 import { buildMetadata } from "@/lib/metadata";
 import { Hero } from "@/components/sections/hero";
 import { RoleStrip } from "@/components/sections/role-strip";
+import { TechMarquee } from "@/components/tech-marquee";
 import { FeaturedWork } from "@/components/sections/featured-work";
 import { ArchitectureHighlightsSection } from "@/components/sections/architecture-highlights";
 import { HowIArchitect } from "@/components/sections/how-i-architect";
@@ -23,6 +24,7 @@ export default function HomePage() {
     <>
       <Hero />
       <RoleStrip />
+      <TechMarquee />
       <FeaturedWork />
       <ArchitectureHighlightsSection />
       <HowIArchitect />

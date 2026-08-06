@@ -139,6 +139,28 @@ Technical CV for consistency, or removing the note once confirmed.
 - **Signature element:** blueprint corner-brackets (`.card-blueprint` in
   `globals.css`) that appear on hover/focus of cards — a nod to technical
   schematics that ties the visual language directly to "architecture."
+- **Motion system:** an `AnnotatedDiagram` component (`src/components/annotated-diagram.tsx`)
+  is the hero's signature visual — a central "Platform Core" card with
+  floating capability labels (RAG, AI Agents, Model Routing, Human Review)
+  connected by hand-drawn-style SVG lines that animate in on load. The same
+  "connect the nodes" language repeats in `ProcessFlow` (dashed lines
+  between the 6 architecture steps) and `ArchitectureFlow` (staggered,
+  connected node reveals in every case study). A single slow, pausable
+  `TechMarquee` rounds out the motion system. All of it was scoped
+  deliberately — see the note below.
+- **Motion design rationale:** this animation direction was planned against
+  a reference video showing a flashy, dark-mode SaaS/UI-kit marketing reel
+  (fast auto-scrolling galleries, neon red/orange accents, urgent copy). The
+  useful *mechanic* from that reference — floating annotated callouts
+  connected by lines to a central visual — was adopted and re-skinned in
+  the site's own navy/blue/teal palette, because it maps naturally onto
+  "architecture." The reference's flashy dark theme, marquee-heavy layout,
+  and urgency-driven copy were deliberately **not** adopted, since they
+  would have undone the calmer, enterprise-credible identity the rest of
+  the site is built around. The one marquee on the site is a single slow
+  row (44s loop), pauses on hover/focus, and is fully disabled under
+  `prefers-reduced-motion` — a restrained, accessible version of the pattern
+  rather than a copy of it.
 - **Diagrams:** case-study "System Architecture" sections use
   `ArchitectureFlow`, a reusable node-flow component driven entirely by each
   project's `architecture` array in `projects.ts` — no hard-coded per-project
@@ -191,6 +213,8 @@ Run locally against this build:
 | JSON-LD present on homepage & publication page | ✅ Verified |
 | Reduced-motion support                    | ✅ Implemented globally |
 | Dark mode                                 | ✅ Implemented (class-based toggle) |
+| Scroll-triggered reveals fire correctly on real scroll (verified via headless-browser scroll simulation) | ✅ Verified — `AnnotatedDiagram`, `ProcessFlow` connecting lines, `ArchitectureFlow` staggered nodes, and `TechMarquee` all confirmed visually |
+| Marquee pauses on hover/focus and is disabled under reduced motion | ✅ Verified in code (`group-hover:[animation-play-state:paused]`, `motion-safe:` variant, global reduced-motion override) |
 
 **Not verified in this environment** (requires a real browser, which this
 sandbox doesn't have): Lighthouse scores, pixel-level responsive QA at every
