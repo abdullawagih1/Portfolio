@@ -217,6 +217,20 @@ Technical CV for consistency, or removing the note once confirmed.
   right, that only appears once the visitor has scrolled). All three respect
   `prefers-reduced-motion` — confirmed via automated reduced-motion emulation
   showing the headline renders fully formed with zero animation.
+- **Bug fix — invisible connecting lines in `AnnotatedDiagram`:** an earlier
+  version of the diagram had two compounding bugs that made the SVG
+  connector lines invisible in production (though they looked fine in
+  isolated review): (1) the SVG `viewBox` height didn't match the 0-100
+  percentage scale used by the CSS-positioned labels, so a label's `y`
+  position and the line's `y` coordinate silently pointed at different
+  places; (2) the line's start point landed *inside* its own label card's
+  footprint rather than outside it, so the line was drawn underneath the
+  card's opaque background. Both were caught by rendering the page in an
+  actual headless browser and reading back computed bounding boxes rather
+  than trusting the JSX — the layout in `annotated-diagram.tsx` now uses
+  precomputed start/anchor coordinates verified against the real rendered
+  DOM, with generous spacing so every connector's path provably never
+  crosses under either card.
 - **Diagrams:** case-study "System Architecture" sections use
   `ArchitectureFlow`, a reusable node-flow component driven entirely by each
   project's `architecture` array in `projects.ts` — no hard-coded per-project

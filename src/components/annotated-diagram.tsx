@@ -7,59 +7,109 @@ type Callout = {
   id: string;
   label: string;
   sublabel: string;
-  // Position of the label box, in percent of the container.
+  // Label box position, in percent of the container (0-100 on both axes).
   x: number;
   y: number;
-  // Where the connecting line attaches on the central card, in percent.
+  // Exact start point of the connecting line — the label's inner corner,
+  // precomputed so the line never crosses back under the label's own body.
+  startX: number;
+  startY: number;
+  // Exact end point — the central card's nearest corner.
   anchorX: number;
   anchorY: number;
   side: "left" | "right";
 };
 
-// Width of a callout card as a percentage of the diagram container (150px / 480px max width).
-const CARD_WIDTH_PCT = 31.25;
-
+// Central card is centered, fixed at 168x132px inside a 480x408px container:
+// roughly x 32.5-67.5%, y 33.8-66.2% (measured from the rendered DOM, not
+// guessed). Callouts below are positioned with generous vertical clearance
+// from that box — the top row's bottom edge sits well above 33.8%, and the
+// bottom row's top edge sits well below 66.2% — so every connector travels
+// through genuinely empty space instead of passing under either card.
 const callouts: Callout[] = [
-  { id: "rag", label: "RAG", sublabel: "Evidence-traceable retrieval", x: 4, y: 14, anchorX: 31, anchorY: 40, side: "left" },
-  { id: "agents", label: "AI Agents", sublabel: "Orchestrated workflows", x: 4, y: 62, anchorX: 31, anchorY: 62, side: "left" },
-  { id: "routing", label: "Model Routing", sublabel: "Cost & quality balance", x: 66, y: 10, anchorX: 69, anchorY: 38, side: "right" },
-  { id: "review", label: "Human Review", sublabel: "Checkpoints that matter", x: 66, y: 64, anchorX: 69, anchorY: 63, side: "right" },
+  {
+    id: "rag",
+    label: "RAG",
+    sublabel: "Evidence-traceable retrieval",
+    x: 2,
+    y: 2,
+    startX: 30.8,
+    startY: 21,
+    anchorX: 32.5,
+    anchorY: 33.8,
+    side: "left",
+  },
+  {
+    id: "agents",
+    label: "AI Agents",
+    sublabel: "Orchestrated workflows",
+    x: 2,
+    y: 76,
+    startX: 30.8,
+    startY: 76,
+    anchorX: 32.5,
+    anchorY: 66.2,
+    side: "left",
+  },
+  {
+    id: "routing",
+    label: "Model Routing",
+    sublabel: "Cost & quality balance",
+    x: 68,
+    y: 2,
+    startX: 68,
+    startY: 21,
+    anchorX: 67.5,
+    anchorY: 33.8,
+    side: "right",
+  },
+  {
+    id: "review",
+    label: "Human Review",
+    sublabel: "Checkpoints that matter",
+    x: 68,
+    y: 76,
+    startX: 68,
+    startY: 76,
+    anchorX: 67.5,
+    anchorY: 66.2,
+    side: "right",
+  },
 ];
 
 function ConnectingLine({ callout, shouldReduceMotion }: { callout: Callout; shouldReduceMotion: boolean | null }) {
-  const startX = callout.side === "left" ? callout.x + CARD_WIDTH_PCT : callout.x;
-  const startY = callout.y + 10;
-  const midX = (startX + callout.anchorX) / 2;
-
-  const d = `M ${startX} ${startY} Q ${midX} ${startY}, ${callout.anchorX} ${callout.anchorY}`;
+  const controlX = (callout.startX + callout.anchorX) / 2;
+  const d = `M ${callout.startX} ${callout.startY} Q ${controlX} ${callout.startY}, ${callout.anchorX} ${callout.anchorY}`;
 
   return (
-    <motion.path
-      d={d}
-      fill="none"
-      strokeWidth="0.4"
-      className="stroke-primary-300 dark:stroke-primary-700"
-      strokeDasharray="2 1.4"
-      initial={{ pathLength: 0, opacity: 0 }}
-      whileInView={{ pathLength: 1, opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: shouldReduceMotion ? 0 : 0.9, ease: "easeInOut", delay: 0.15 }}
-    />
-  );
-}
-
-// A plain HTML dot (not SVG) so it stays perfectly round even though the
-// SVG above is stretched non-uniformly to match the container's aspect ratio.
-function AnchorDot({ callout, shouldReduceMotion }: { callout: Callout; shouldReduceMotion: boolean | null }) {
-  return (
-    <motion.span
-      className="absolute h-[7px] w-[7px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-500"
-      style={{ left: `${callout.anchorX}%`, top: `${callout.anchorY}%` }}
-      initial={{ opacity: 0, scale: 0 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.3, delay: shouldReduceMotion ? 0 : 0.9 }}
-    />
+    <>
+      {/* Stroke width and dash pattern are plain SVG attributes (not run
+          through Framer's pathLength/style pipeline), which otherwise
+          resolves stroke-width in literal CSS pixels and renders the line
+          effectively invisible. Only opacity is animated here. */}
+      <motion.path
+        d={d}
+        fill="none"
+        strokeWidth={1}
+        strokeDasharray="2.2 1.6"
+        strokeLinecap="round"
+        className="stroke-primary-400 dark:stroke-primary-500"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: shouldReduceMotion ? 0 : 0.6, ease: "easeOut", delay: 0.15 }}
+      />
+      <motion.circle
+        cx={callout.anchorX}
+        cy={callout.anchorY}
+        r={1}
+        className="fill-accent-500"
+        initial={{ opacity: 0, scale: 0 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.3, delay: shouldReduceMotion ? 0 : 0.6 }}
+      />
+    </>
   );
 }
 
@@ -89,12 +139,13 @@ export function AnnotatedDiagram() {
 
   return (
     <div
-      className="relative mx-auto aspect-[4/3.4] w-full max-w-[480px]"
+      className="relative mx-auto aspect-[4/3.6] w-full max-w-[480px]"
       role="img"
       aria-label="Diagram: a central AI platform connected to RAG, AI Agents, Model Routing, and Human Review capabilities"
     >
-      {/* Connecting lines, in a 0-100 coordinate space matching the cards' left/top percentages.
-          preserveAspectRatio="none" is required because the container isn't square. */}
+      {/* Connecting lines, drawn in the same 0-100 x 0-100 coordinate space
+          used for the labels' CSS percentage positions below, so the two
+          systems always agree on where things actually are. */}
       <svg
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
@@ -105,10 +156,6 @@ export function AnnotatedDiagram() {
           <ConnectingLine key={c.id} callout={c} shouldReduceMotion={shouldReduceMotion} />
         ))}
       </svg>
-
-      {callouts.map((c) => (
-        <AnchorDot key={c.id} callout={c} shouldReduceMotion={shouldReduceMotion} />
-      ))}
 
       {/* Central card — tilts gently toward the cursor, like glass catching light */}
       <div
@@ -142,7 +189,7 @@ export function AnnotatedDiagram() {
       {callouts.map((c, i) => (
         <motion.div
           key={c.id}
-          className={`card-blueprint absolute w-[150px] border px-3.5 py-2.5 ${
+          className={`card-blueprint absolute w-[140px] border px-3.5 py-2.5 ${
             c.side === "right" ? "text-right" : ""
           }`}
           style={{ left: `${c.x}%`, top: `${c.y}%` }}
