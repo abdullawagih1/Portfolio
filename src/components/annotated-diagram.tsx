@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useMotionValue, useSpring, useTransform, useReducedMotion } from "framer-motion";
 
 type Callout = {
   id: string;
@@ -64,6 +65,27 @@ function AnchorDot({ callout, shouldReduceMotion }: { callout: Callout; shouldRe
 
 export function AnnotatedDiagram() {
   const shouldReduceMotion = useReducedMotion();
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  // Raw pointer offset (-0.5 to 0.5) from the card's center.
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const smoothX = useSpring(pointerX, { stiffness: 150, damping: 18, mass: 0.4 });
+  const smoothY = useSpring(pointerY, { stiffness: 150, damping: 18, mass: 0.4 });
+  const rotateX = useTransform(smoothY, [-0.5, 0.5], [7, -7]);
+  const rotateY = useTransform(smoothX, [-0.5, 0.5], [-7, 7]);
+
+  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    if (shouldReduceMotion || !cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    pointerX.set((e.clientX - rect.left) / rect.width - 0.5);
+    pointerY.set((e.clientY - rect.top) / rect.height - 0.5);
+  }
+
+  function handleMouseLeave() {
+    pointerX.set(0);
+    pointerY.set(0);
+  }
 
   return (
     <div
@@ -88,10 +110,17 @@ export function AnnotatedDiagram() {
         <AnchorDot key={c.id} callout={c} shouldReduceMotion={shouldReduceMotion} />
       ))}
 
-      {/* Central card */}
-      <div className="absolute inset-0 flex items-center justify-center">
+      {/* Central card — tilts gently toward the cursor, like glass catching light */}
+      <div
+        className="absolute inset-0 flex items-center justify-center"
+        style={{ perspective: 700 }}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+      >
         <motion.div
-          className="flex h-[132px] w-[168px] flex-col items-center justify-center rounded-2xl border border-primary-200 bg-surface shadow-[0_20px_60px_-15px_rgba(34,71,190,0.25)] motion-safe:animate-[breathe_5s_ease-in-out_infinite] dark:border-primary-800 dark:bg-surface-dark"
+          ref={cardRef}
+          className="flex h-[132px] w-[168px] flex-col items-center justify-center rounded-2xl border border-primary-200 bg-surface shadow-[0_20px_60px_-15px_rgba(34,71,190,0.25)] dark:border-primary-800 dark:bg-surface-dark"
+          style={{ rotateX: shouldReduceMotion ? 0 : rotateX, rotateY: shouldReduceMotion ? 0 : rotateY }}
           initial={{ opacity: 0, scale: 0.92 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}

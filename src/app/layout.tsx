@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { SkipLink } from "@/components/skip-link";
+import { ScrollProgress } from "@/components/scroll-progress";
 import { personJsonLd, profilePageJsonLd } from "@/lib/structured-data";
 import "./globals.css";
 
@@ -62,6 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Header />
           <main id="main-content">{children}</main>
           <Footer />
+          <ScrollProgress />
         </ThemeProvider>
         <Analytics />
       </body>

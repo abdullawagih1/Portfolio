@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, FileDown } from "lucide-react";
 import { siteConfig } from "@/content/site";
 import { AnnotatedDiagram } from "@/components/annotated-diagram";
+import { WordReveal } from "@/components/word-reveal";
 
 export function Hero() {
   const shouldReduceMotion = useReducedMotion();
@@ -26,15 +27,12 @@ export function Hero() {
             AI Solution Architect · Generative AI Engineer
           </motion.p>
 
-          <motion.h1
-            {...fade(0.08)}
-            className="mt-5 max-w-xl font-display text-[34px] font-semibold leading-[1.12] tracking-tight text-ink sm:text-[46px] lg:text-[50px] dark:text-ink-inverse"
-          >
-            I architect AI systems that move from idea to production.
-          </motion.h1>
+          <h1 className="mt-5 max-w-xl font-display text-[34px] font-semibold leading-[1.12] tracking-tight text-ink sm:text-[46px] lg:text-[50px] dark:text-ink-inverse">
+            <WordReveal text="I architect AI systems that move from idea to production." delay={0.05} />
+          </h1>
 
           <motion.p
-            {...fade(0.16)}
+            {...fade(0.62)}
             className="mt-6 max-w-lg text-[16px] leading-relaxed text-ink-soft sm:text-[17px] dark:text-ink-inverse/75"
           >
             I design production-ready AI platforms powered by LLMs, RAG, AI agents, computer
@@ -43,13 +41,13 @@ export function Hero() {
           </motion.p>
 
           <motion.p
-            {...fade(0.22)}
+            {...fade(0.7)}
             className="mt-5 font-mono text-[12.5px] text-ink-faint dark:text-ink-inverse/50"
           >
             {siteConfig.roleLine}
           </motion.p>
 
-          <motion.div {...fade(0.3)} className="mt-9 flex flex-wrap items-center gap-4">
+          <motion.div {...fade(0.78)} className="mt-9 flex flex-wrap items-center gap-4">
             <Link
               href="/work"
               className="inline-flex items-center gap-2 rounded-full bg-primary-600 px-6 py-3 text-[14px] font-medium text-white transition-colors hover:bg-primary-700"

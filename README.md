@@ -201,6 +201,22 @@ Technical CV for consistency, or removing the note once confirmed.
   row (44s loop), pauses on hover/focus, and is fully disabled under
   `prefers-reduced-motion` — a restrained, accessible version of the pattern
   rather than a copy of it.
+- **Second motion pass — cinematic product-site reference:** a later round
+  drew on seven "high-end Figma prototype" reference videos (luxury product
+  launches: a smart ring, a crystal flower, a snowboarding brand, a
+  supercar, etc.), all sharing a cinematic, WebGL-heavy visual language
+  (3D page-tilt transitions, oversized morphing hero objects, numbered path
+  carousels). That whole *genre* was rejected as a fit — it sells luxury and
+  drama, not architecture and reliability. Three specific, lower-cost
+  mechanics were extracted and re-applied in the site's existing visual
+  language instead: `WordReveal` (word-by-word headline entrance, used in
+  the Hero), a subtle cursor-tracked 3D tilt on the Hero diagram's central
+  card (`useMotionValue`/`useSpring` in `annotated-diagram.tsx` — a restrained
+  nod to "glass catching light" rather than a full page-tilt), and
+  `ScrollProgress` (a small fixed circular scroll-to-top indicator, bottom
+  right, that only appears once the visitor has scrolled). All three respect
+  `prefers-reduced-motion` — confirmed via automated reduced-motion emulation
+  showing the headline renders fully formed with zero animation.
 - **Diagrams:** case-study "System Architecture" sections use
   `ArchitectureFlow`, a reusable node-flow component driven entirely by each
   project's `architecture` array in `projects.ts` — no hard-coded per-project
