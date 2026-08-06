@@ -15,44 +15,50 @@ type Callout = {
   side: "left" | "right";
 };
 
+// Width of a callout card as a percentage of the diagram container (150px / 480px max width).
+const CARD_WIDTH_PCT = 31.25;
+
 const callouts: Callout[] = [
-  { id: "rag", label: "RAG", sublabel: "Evidence-traceable retrieval", x: 4, y: 14, anchorX: 30, anchorY: 30, side: "left" },
-  { id: "agents", label: "AI Agents", sublabel: "Orchestrated workflows", x: 4, y: 62, anchorX: 28, anchorY: 68, side: "left" },
-  { id: "routing", label: "Model Routing", sublabel: "Cost & quality balance", x: 66, y: 10, anchorX: 72, anchorY: 28, side: "right" },
-  { id: "review", label: "Human Review", sublabel: "Checkpoints that matter", x: 66, y: 64, anchorX: 70, anchorY: 70, side: "right" },
+  { id: "rag", label: "RAG", sublabel: "Evidence-traceable retrieval", x: 4, y: 14, anchorX: 31, anchorY: 40, side: "left" },
+  { id: "agents", label: "AI Agents", sublabel: "Orchestrated workflows", x: 4, y: 62, anchorX: 31, anchorY: 62, side: "left" },
+  { id: "routing", label: "Model Routing", sublabel: "Cost & quality balance", x: 66, y: 10, anchorX: 69, anchorY: 38, side: "right" },
+  { id: "review", label: "Human Review", sublabel: "Checkpoints that matter", x: 66, y: 64, anchorX: 69, anchorY: 63, side: "right" },
 ];
 
 function ConnectingLine({ callout, shouldReduceMotion }: { callout: Callout; shouldReduceMotion: boolean | null }) {
-  const startX = callout.side === "left" ? callout.x + 15 : callout.x;
-  const startY = callout.y + 4;
+  const startX = callout.side === "left" ? callout.x + CARD_WIDTH_PCT : callout.x;
+  const startY = callout.y + 10;
   const midX = (startX + callout.anchorX) / 2;
 
   const d = `M ${startX} ${startY} Q ${midX} ${startY}, ${callout.anchorX} ${callout.anchorY}`;
 
   return (
-    <>
-      <motion.path
-        d={d}
-        fill="none"
-        strokeWidth="0.4"
-        className="stroke-primary-300 dark:stroke-primary-700"
-        strokeDasharray="2 1.4"
-        initial={{ pathLength: 0, opacity: 0 }}
-        whileInView={{ pathLength: 1, opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: shouldReduceMotion ? 0 : 0.9, ease: "easeInOut", delay: 0.15 }}
-      />
-      <motion.circle
-        cx={callout.anchorX}
-        cy={callout.anchorY}
-        r={0.9}
-        className="fill-accent-500"
-        initial={{ opacity: 0, scale: 0 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.3, delay: shouldReduceMotion ? 0 : 0.9 }}
-      />
-    </>
+    <motion.path
+      d={d}
+      fill="none"
+      strokeWidth="0.4"
+      className="stroke-primary-300 dark:stroke-primary-700"
+      strokeDasharray="2 1.4"
+      initial={{ pathLength: 0, opacity: 0 }}
+      whileInView={{ pathLength: 1, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: shouldReduceMotion ? 0 : 0.9, ease: "easeInOut", delay: 0.15 }}
+    />
+  );
+}
+
+// A plain HTML dot (not SVG) so it stays perfectly round even though the
+// SVG above is stretched non-uniformly to match the container's aspect ratio.
+function AnchorDot({ callout, shouldReduceMotion }: { callout: Callout; shouldReduceMotion: boolean | null }) {
+  return (
+    <motion.span
+      className="absolute h-[7px] w-[7px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-500"
+      style={{ left: `${callout.anchorX}%`, top: `${callout.anchorY}%` }}
+      initial={{ opacity: 0, scale: 0 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.3, delay: shouldReduceMotion ? 0 : 0.9 }}
+    />
   );
 }
 
@@ -65,9 +71,11 @@ export function AnnotatedDiagram() {
       role="img"
       aria-label="Diagram: a central AI platform connected to RAG, AI Agents, Model Routing, and Human Review capabilities"
     >
-      {/* Connecting lines, drawn in diagram-space coordinates (0-100) */}
+      {/* Connecting lines, in a 0-100 coordinate space matching the cards' left/top percentages.
+          preserveAspectRatio="none" is required because the container isn't square. */}
       <svg
-        viewBox="0 0 100 86"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
         className="pointer-events-none absolute inset-0 h-full w-full"
         aria-hidden="true"
       >
@@ -75,6 +83,10 @@ export function AnnotatedDiagram() {
           <ConnectingLine key={c.id} callout={c} shouldReduceMotion={shouldReduceMotion} />
         ))}
       </svg>
+
+      {callouts.map((c) => (
+        <AnchorDot key={c.id} callout={c} shouldReduceMotion={shouldReduceMotion} />
+      ))}
 
       {/* Central card */}
       <div className="absolute inset-0 flex items-center justify-center">
