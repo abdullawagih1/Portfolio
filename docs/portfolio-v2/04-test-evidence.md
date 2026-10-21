@@ -2,6 +2,22 @@
 
 Runtime: Node.js v24.20.0 LTS, npm 11.19.0, lockfile `package-lock.json`.
 
+## Release prep — 2026-10-21, on commit `9d24bc71b06f6c63c96318babde3c9e9f05ade1e`
+
+**Scope: LOCAL verification only. No production test has been run or passed.**
+
+| Check | Command | Result |
+|---|---|---|
+| Typecheck | `npm run typecheck` | exit 0 |
+| Lint | `npm run lint` | exit 0, no warnings |
+| Build | `npm run build` | exit 0, 19/19 pages |
+| Local asset exposure | `next start -p 3124` + `curl` | PDF 200 (hash `14ddabf2…1d95`); both DOCX, zip, `.env*`, and `docs/portfolio-v2/inputs/*` return 404; `<title>` is "Abdullah Wagih \| AI Engineer \| Generative AI Engineer" |
+| Client-bundle credential check | `grep -rlE "GMAIL_APP_PASSWORD\|GMAIL_USER\|RESEND_API_KEY\|nodemailer\|api.resend.com" .next/static` | No matches |
+| Secret scan of changed files | see 09 §6 | No secrets |
+| Production observation (read-only `curl`, not a test of this commit) | — | Still the old deployment: old title, "AI Team Leader", "Jan 2026"; both DOCX 200; PDF 404 |
+
+Contact form: **code-reviewed only, not exercised at runtime.** No test email was sent.
+
 ## Run 3 — 2026-10-21, after Batch A changes (branch `portfolio-v2/batch-a`)
 
 | Check | Command | Exit | Result |

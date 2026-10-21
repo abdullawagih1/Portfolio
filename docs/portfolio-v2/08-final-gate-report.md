@@ -6,7 +6,7 @@ Batch A is implemented locally and verified, with no factual contradictions with
 
 ## Changes implemented
 
-CV-01 through CV-07, PR-01 (verified), OPS-01, and QA-01. Branch `portfolio-v2/batch-a`, uncommitted. Full traceability is in 03.
+CV-01 through CV-07, PR-01 (verified), OPS-01, and QA-01. Branch `portfolio-v2/batch-a`, local commit `9d24bc71b06f6c63c96318babde3c9e9f05ade1e` (not pushed). Full traceability is in 03. Release readiness is in 09.
 
 ## Files modified
 
@@ -48,12 +48,12 @@ After the final edit: typecheck **0**, lint **0** (no warnings), build **0** (19
 
 1. D-11: configure the Gmail credential and run the delivery test (owner).
 2. D-16: an authorized deployment is needed for the changes to take effect publicly.
-3. D-13: Orchestrator decision on committing the branch.
+3. D-18: push, merge, and deployment are not yet authorized. (D-13, the commit, is resolved.)
 4. Non-blocking: D-5a, D-10, D-12, D-15. (D-14 resolved: the motto is kept as a secondary tagline.)
 
 ## Commit preparation (Batch A Commit Preparation order)
 
-D-13 resolved: authorized for one local commit on `portfolio-v2/batch-a`, with no push, merge, or deploy. `docs/portfolio-v2/inputs/` (CV PDF, Teaching PDF draft, Change Register) is excluded by `.gitignore`. The approved public CV ships as `public/Abdullah-Wagih-Technical-CV.pdf`.
+D-13 resolved: committed locally as `9d24bc71b06f6c63c96318babde3c9e9f05ade1e` (24 files), with no push, merge, or deploy. The working tree was clean after the commit. `docs/portfolio-v2/inputs/` (CV PDF, Teaching PDF draft, Change Register) is excluded by `.gitignore`. The approved public CV ships as `public/Abdullah-Wagih-Technical-CV.pdf`.
 
 ## Stop
 

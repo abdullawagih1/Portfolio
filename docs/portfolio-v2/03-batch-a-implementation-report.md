@@ -1,6 +1,6 @@
 # 03 — Batch A Implementation Report (Run 3)
 
-**Status: IMPLEMENTED locally** on branch `portfolio-v2/batch-a` (from `main` @ `078519e`). Nothing is committed, merged, or deployed.
+**Status: IMPLEMENTED and COMMITTED LOCALLY.** Branch `portfolio-v2/batch-a`, commit `9d24bc71b06f6c63c96318babde3c9e9f05ade1e` (parent `078519e`, the tip of `main`). **Not pushed, merged, or deployed.** All verification so far is local; production has not received these changes.
 
 ## Traceability: Change ID → files → test → status
 

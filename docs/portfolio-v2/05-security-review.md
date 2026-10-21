@@ -33,6 +33,23 @@ The contact form should be treated as **potentially unavailable**. The old Gmail
 
 The DOCX files were removed from `public/` locally and return 404 on the local build. **Production still serves `/Abdullah-Wagih-Teaching-CV.docx` and `/Abdullah-Wagih-Technical-CV.docx` (HTTP 200)** until an authorized deployment of this branch. Both files also remain in git history in the public GitHub repo; their content is the same as what has been public all along.
 
+## Release-prep update — public artifact exposure, three views (2026-10-21)
+
+| Artifact | 1. Local build (`9d24bc7`) | 2. Current production | 3. Git history |
+|---|---|---|---|
+| `Abdullah-Wagih-Technical-CV.pdf` (approved) | 200, hash-matched | 404 (not deployed yet) | Added in `9d24bc7` (local only) |
+| `Abdullah-Wagih-Technical-CV.docx` (outdated, placeholders) | 404 | **200** | In `3a36772`, **already on public GitHub**; deleted in `9d24bc7` |
+| `Abdullah-Wagih-Teaching-CV.docx` (placeholders) | 404 | **200** | Same as above |
+| `docs/portfolio-v2/inputs/*` (private inputs) | 404 (outside `public/`) | 404 | Never committed (gitignored) |
+| `.env.local`, `.env`, `.env.example` (as URLs) | 404 | 404 | Only `.env.example` (placeholders) is tracked |
+| `portfolio.zip` | 404 | 404 | Never committed |
+
+History was not rewritten (D-19).
+
+## S-11 — Contact form credential exposure: PASS (code review)
+
+`src/lib/email.ts` is imported only by the `"use server"` action `src/lib/actions.ts`. The only `NEXT_PUBLIC_` variable is `NEXT_PUBLIC_SITE_URL`. The built `.next/static` contains no `GMAIL_*`, `RESEND_API_KEY`, `nodemailer`, or `api.resend.com` references, so credentials cannot reach the client. Server logs record provider error objects (`console.error`), not the credential values passed in.
+
 ## S-02 — PASS: `.env.local` handling
 
 `.env*.local` and `.env` are gitignored. `.env.local` appears in no commit. `.env.example` holds placeholders only.
@@ -47,7 +64,7 @@ No API keys, tokens, or passwords were found in tracked source (`git grep` patte
 
 ## S-05 — INFO (Batch D): headers
 
-There is no Content-Security-Policy, and HSTS relies on Vercel's defaults.
+There is no Content-Security-Policy. HSTS is confirmed on production (`max-age=63072000; includeSubDomains; preload`, from Vercel).
 
 ## S-06 — INFO: git "dubious ownership"
 

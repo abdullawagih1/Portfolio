@@ -47,6 +47,8 @@ Recorded 2026-10-21, before any change. No application files have been modified.
 
 > **Update 2026-10-21 (Run 2):** Node.js v24.20.0 LTS and npm 11.19.0 were installed via winget with owner approval. The baseline typecheck, lint, and build pass (see 04). `portfolio.zip` has been moved out of the working tree (see 05).
 
+> **Update 2026-10-21 (Release prep):** Batch A is committed locally as `9d24bc71b06f6c63c96318babde3c9e9f05ade1e` on `portfolio-v2/batch-a`. It is not pushed; `origin/main` is still at `078519e`. This baseline describes the state **before** that commit.
+>
 > **Update 2026-10-21 (Run 3):** both inputs are now present in `docs/portfolio-v2/inputs/` (see the table below). Batch A work is on branch `portfolio-v2/batch-a`, created from `main` at `078519e`.
 
 ## Authoritative inputs

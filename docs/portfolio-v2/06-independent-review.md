@@ -21,6 +21,10 @@ A separate reviewer agent, with no edit rights, read the CV PDF, the Change Regi
 - No layout redesign and no Batch B content changes.
 - No secrets in the diff or in `public/`. The PDF is byte-identical to the approved input.
 
+## Post-commit note
+
+The reviewed changes, together with the review fixes, are what was committed in `9d24bc71b06f6c63c96318babde3c9e9f05ade1e`. The release-prep review of the contact form (09 §3) found no credential exposure. It found hardening gaps (no length limits, no `reason` allow-list, no honeypot or rate limit) that belong to OPS-03 in Batch D and are not Batch A defects.
+
 ## Self-critique
 
 The R-6 miss shows that keyword greps were too narrow ("Solution Architect", "Team Leader"). The final sweep ran over all rendered HTML for the bare word "Architect" and classified every hit (see 04). Residual risk is low: the remaining hits are per-project roles, capability headings, the CV verb, and the motto under D-14.
