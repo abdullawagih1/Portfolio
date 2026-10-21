@@ -6,7 +6,7 @@ export function personJsonLd() {
     "@context": "https://schema.org",
     "@type": "Person",
     name: siteConfig.name,
-    jobTitle: "AI Solution Architect & Generative AI Engineer",
+    jobTitle: "AI Engineer | Generative AI Engineer",
     url: siteConfig.url,
     email: `mailto:${siteConfig.email}`,
     address: {

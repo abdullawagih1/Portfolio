@@ -44,15 +44,6 @@ export function Footer() {
                 Technical CV
               </a>
             </li>
-            <li>
-              <a
-                href={siteConfig.cv.teaching.href}
-                download
-                className="text-ink-soft transition-colors hover:text-primary-600 dark:text-ink-inverse/70 dark:hover:text-primary-300"
-              >
-                Teaching CV
-              </a>
-            </li>
           </ul>
         </div>
 

@@ -13,9 +13,9 @@ import { PublicationPreview } from "@/components/sections/publication-preview";
 import { ContactCta } from "@/components/sections/contact-cta";
 
 export const metadata = buildMetadata({
-  title: "Abdullah Wagih | AI Solution Architect & Generative AI Engineer",
+  title: "Abdullah Wagih | AI Engineer | Generative AI Engineer",
   description:
-    "Portfolio of Abdullah Wagih, an AI Solution Architect and Generative AI Engineer designing enterprise LLM, RAG, AI-agent, computer vision, and intelligent automation platforms.",
+    "Portfolio of Abdullah Wagih, an AI Engineer and Generative AI Engineer with 3+ years of experience building enterprise AI products across LLMs, RAG, AI agents, computer vision, and NLP for clients in Egypt and Saudi Arabia.",
   path: "/",
 });
 

@@ -9,17 +9,17 @@ export type Experience = {
   capabilities: string[];
 };
 
-// Primary architecture & leadership roles, shown in full on the homepage
-// and About page. Teaching roles are intentionally summarized separately —
-// see teaching.ts — to keep this list focused on architecture leadership.
+// Primary engineering roles, shown in full on the homepage and About page.
+// Titles, dates, and metrics must match the approved Technical CV. Teaching
+// roles are intentionally summarized separately — see teaching.ts.
 export const primaryExperience: Experience[] = [
   {
-    role: "AI Team Leader",
+    role: "AI Engineer",
     org: "Vitamera",
     location: "KSA (Remote)",
     period: "Jun 2026 — Present",
     employment: "Part-time",
-    scope: "Leading a multidisciplinary AI team building production AI products for the Saudi market.",
+    scope: "Leading a multidisciplinary AI team delivering production-ready AI products for the Saudi market.",
     responsibility:
       "Own solution architecture, task allocation, code review, technical standards, and delivery coordination across AI/LLM, backend, data, and product workstreams.",
     capabilities: [
@@ -31,12 +31,12 @@ export const primaryExperience: Experience[] = [
     ],
   },
   {
-    role: "AI Solution Architect",
+    role: "AI Engineer",
     org: "Rubix",
     location: "Cairo, Egypt",
-    period: "Jan 2026 — Present",
+    period: "Oct 2025 — Present",
     employment: "Full-time",
-    scope: "Designing and implementing end-to-end AI systems that turn business requirements into production platforms.",
+    scope: "Designing and implementing end-to-end AI systems that turn business requirements into scalable, production-ready solutions.",
     responsibility:
       "Architect AI solutions across the full lifecycle — problem framing, data pipelines, model development, evaluation, deployment, and monitoring — with cross-functional teams.",
     capabilities: [
@@ -54,7 +54,7 @@ export const primaryExperience: Experience[] = [
     employment: "Part-time",
     scope: "Scalable machine learning for real-time logistics operations.",
     responsibility:
-      "Designed shipment delay prediction and risk detection models, built Spark and Hadoop data pipelines, and deployed predictive models for real-time use.",
+      "Designed shipment delay prediction and risk detection models that improved forecast accuracy by 15%, built Spark and Hadoop data pipelines, and deployed predictive models for real-time operational use at 920 shipments/day scale.",
     capabilities: [
       "Real-time predictive ML",
       "Spark & Hadoop pipelines",

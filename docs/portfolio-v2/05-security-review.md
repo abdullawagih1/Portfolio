@@ -1,0 +1,58 @@
+# 05 — Security Review
+
+## S-01 — HIGH → **REMEDIATED (security gate closed, pending Orchestrator acceptance)**
+
+**Finding:** the untracked, non-ignored `portfolio.zip` contained a copy of `.env.local` with a live `GMAIL_APP_PASSWORD`, inside the working tree of a **public** GitHub repo. It was never committed and never served by production. The secret value was not displayed or copied into any report.
+
+**Remediation evidence (2026-10-21):**
+
+| Step | Evidence |
+|---|---|
+| Credential revocation | **Owner confirmed** the Gmail App Password has been revoked (answered in-session: "Yes, revoked"). The agent did not touch any external credential. |
+| Safe backup outside the repo | Moved to `C:\Users\Abdullah\portfolio-backups\portfolio-2026-10-21.zip`. SHA-256 before and after the move matches (`e08c563f…a099`). |
+| Removed from working tree | `ls portfolio.zip` reports "No such file or directory" |
+| `.gitignore` exclusion | Appended `*.zip` under the comment `# archives (may contain env files)` |
+| Nothing tracked or staged | `git diff --cached` shows 0 files; `git ls-files` env matches only `.env.example` |
+| Not publicly accessible | Production `/portfolio.zip` and `/.env.local` return 404 |
+
+**Owner follow-up (outside agent scope):**
+- Put the new app password in local `.env.local` and in the Vercel project env vars. Until then, the live contact form cannot send email.
+- The backup zip still contains the now-revoked password. Delete it once no longer needed.
+
+**Run 3 re-verification (2026-10-21):** `portfolio.zip` is still absent from the repo. The backup remains only at `C:\Users\Abdullah\portfolio-backups\`. The secret was not read or printed during Run 3.
+
+## S-08 — Contact form availability (Run 3)
+
+The contact form should be treated as **potentially unavailable**. The old Gmail App Password is revoked. A new credential must be set in `.env.local` and in Vercel (the agent is not authorized to do this), and an end-to-end delivery test must succeed before the form is considered working.
+
+## S-09 — Published CV PDF (Run 3)
+
+`public/Abdullah-Wagih-Technical-CV.pdf` contains no JavaScript, EmbeddedFile, Launch, or OpenAction objects. Its metadata is Author "(Un-named)" and Creator/Producer "Microsoft Word for Microsoft 365". Its links point to the portfolio, LinkedIn, a mailto, and the paper's DOI. The personal data in it (phone and email) is already public on the site.
+
+## S-10 — Teaching CV still publicly accessible on production
+
+The DOCX files were removed from `public/` locally and return 404 on the local build. **Production still serves `/Abdullah-Wagih-Teaching-CV.docx` and `/Abdullah-Wagih-Technical-CV.docx` (HTTP 200)** until an authorized deployment of this branch. Both files also remain in git history in the public GitHub repo; their content is the same as what has been public all along.
+
+## S-02 — PASS: `.env.local` handling
+
+`.env*.local` and `.env` are gitignored. `.env.local` appears in no commit. `.env.example` holds placeholders only.
+
+## S-03 — PASS: tracked files
+
+No API keys, tokens, or passwords were found in tracked source (`git grep` pattern scan).
+
+## S-04 — LOW: personal phone number published
+
+`src/content/site.ts:17`. It also appears in the CV, so this is presumably intentional. Owner to confirm.
+
+## S-05 — INFO (Batch D): headers
+
+There is no Content-Security-Policy, and HSTS relies on Vercel's defaults.
+
+## S-06 — INFO: git "dubious ownership"
+
+The agent uses a per-command `-c safe.directory`. Global git config is unchanged.
+
+## S-07 — INFO: npm install-script notice
+
+`unrs-resolver@1.12.2` (an eslint-config-next transitive dependency) has a postinstall script that npm 11's allowScripts policy flags. Lint and build work regardless. No action needed.

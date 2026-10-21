@@ -33,3 +33,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# archives (may contain env files)
+*.zip
+
+# Portfolio v2 authoritative inputs (Teaching CV draft contains placeholders; repo is public)
+docs/portfolio-v2/inputs/

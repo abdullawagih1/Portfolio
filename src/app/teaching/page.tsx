@@ -1,9 +1,8 @@
 import Link from "next/link";
-import { FileDown, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { buildMetadata } from "@/lib/metadata";
 import { teachingPhilosophy, teachingRoles, curricula, teachingSubjects } from "@/content/teaching";
 import { hackathons } from "@/content/hackathons";
-import { siteConfig } from "@/content/site";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/reveal";
 
@@ -106,7 +105,7 @@ export default function TeachingPage() {
           <SectionHeading
             eyebrow="Industry-to-Classroom"
             title="Subjects taught"
-            description="Every subject below is one I actively practice as a working AI Solution Architect — not a topic taught from a textbook alone."
+            description="Every subject below is one I actively practice as a working AI Engineer — not a topic taught from a textbook alone."
           />
           <ul className="mt-8 flex flex-wrap gap-2">
             {teachingSubjects.map((s) => (
@@ -156,19 +155,11 @@ export default function TeachingPage() {
               Looking for a technical trainer?
             </h2>
             <p className="mt-2 max-w-md text-[14px] text-ink-soft dark:text-ink-inverse/70">
-              Download the full Teaching CV, or get in touch about a training or workshop
-              collaboration.
+              A full teaching portfolio is available on request — get in touch about a training
+              or workshop collaboration.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <a
-              href={siteConfig.cv.teaching.href}
-              download
-              className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-[14px] font-medium text-ink-inverse dark:bg-primary-600"
-            >
-              <FileDown size={15} />
-              Teaching CV
-            </a>
             <Link
               href="/contact"
               className="inline-flex items-center gap-2 rounded-full border border-line px-6 py-3 text-[14px] font-medium text-ink dark:border-line-dark dark:text-ink-inverse"

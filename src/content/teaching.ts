@@ -9,7 +9,7 @@ export type TeachingRole = {
 };
 
 export const teachingPhilosophy =
-  "I teach the way I build: project-first. Every concept is anchored to a real, working system so learners leave with something they built, not just something they understood. Because I actively practice as an AI Architect, my labs reflect current industry tooling and real production constraints rather than textbook simplifications.";
+  "I teach the way I build: project-first. Every concept is anchored to a real, working system so learners leave with something they built, not just something they understood. Because I actively practice as an AI Engineer, my labs reflect current industry tooling and real production constraints rather than textbook simplifications.";
 
 export const teachingRoles: TeachingRole[] = [
   {

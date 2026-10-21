@@ -34,10 +34,12 @@ export default function AboutPage() {
       <div className="container-page max-w-2xl">
         <SectionHeading eyebrow="About" title={siteConfig.tagline} />
         <p className="mt-5 text-[15.5px] leading-relaxed text-ink-soft dark:text-ink-inverse/75">
-          I&apos;m an AI Solution Architect and Generative AI Engineer based in Cairo, currently
-          architecting production AI platforms for clients in Egypt and Saudi Arabia while leading
-          a multidisciplinary AI team and teaching applied AI across several institutions. My work
-          spans healthcare, logistics, education, real estate, and enterprise automation — always
+          I&apos;m an AI Engineer and Generative AI Engineer based in Cairo, with 3+ years of
+          experience building enterprise AI products across LLMs, RAG, AI agents, computer vision,
+          and NLP for clients in Egypt and Saudi Arabia. I lead a multidisciplinary AI team and
+          teach applied AI across several institutions, where I have trained 500+ engineers and
+          students. My work spans healthcare, logistics, education, real estate, and enterprise
+          automation — always
           with the same underlying question: how do we get an AI system from a good idea to
           something a real team can rely on in production.
         </p>

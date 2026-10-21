@@ -33,7 +33,7 @@ export function Header() {
         >
           Abdullah Wagih
           <span className="ml-2 hidden font-mono text-[11px] font-normal uppercase tracking-[0.14em] text-ink-faint sm:inline">
-            AI Architect
+            AI Engineer
           </span>
         </Link>
 
@@ -58,14 +58,6 @@ export function Header() {
           >
             <FileDown size={13} />
             Technical CV
-          </a>
-          <a
-            href={siteConfig.cv.teaching.href}
-            download
-            className="inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 font-mono text-[11px] font-medium uppercase tracking-[0.1em] text-ink-inverse transition-colors hover:bg-primary-700 dark:bg-primary-600"
-          >
-            <FileDown size={13} />
-            Teaching CV
           </a>
         </div>
 
@@ -111,14 +103,6 @@ export function Header() {
                 >
                   <FileDown size={13} />
                   Technical CV
-                </a>
-                <a
-                  href={siteConfig.cv.teaching.href}
-                  download
-                  className="inline-flex items-center justify-center gap-1.5 rounded-full bg-ink px-4 py-3 font-mono text-[11px] font-medium uppercase tracking-[0.1em] text-ink-inverse dark:bg-primary-600"
-                >
-                  <FileDown size={13} />
-                  Teaching CV
                 </a>
                 <div className="flex justify-center pt-1">
                   <ThemeToggle />

@@ -266,7 +266,7 @@ export const projects: Project[] = [
     relatedProjects: ["careeros", "logibrain"],
     visualSystem: "proposal-flow",
     reviewNote:
-      "Rashad is described in the site brief but does not currently appear in either source CV. Recommend adding it to the Technical CV's Selected Client Projects section for consistency, or confirming details before publishing this case study live.",
+      "Rashad does not appear in the Technical CV's six Selected Client Projects. Retained as an additional (non-featured) project by Orchestrator decision on 2026-10-21; do not present it as one of the CV's selected six.",
   },
   {
     slug: "hormonify",

@@ -1,7 +1,7 @@
-# Abdullah Wagih — AI Solution Architect Portfolio
+# Abdullah Wagih — AI Engineer Portfolio
 
-A production Next.js 14 (App Router) portfolio built for Abdullah Wagih Ibrahim: AI Solution
-Architect, Generative AI Engineer, AI Team Leader, and Technical Educator.
+A production Next.js 14 (App Router) portfolio built for Abdullah Wagih Ibrahim: AI Engineer,
+Generative AI Engineer, and Technical Educator.
 
 ---
 
@@ -133,8 +133,7 @@ src/
   lib/
     utils.ts, metadata.ts, structured-data.ts, actions.ts (contact form server action)
 public/
-  Abdullah-Wagih-Technical-CV.docx
-  Abdullah-Wagih-Teaching-CV.docx
+  Abdullah-Wagih-Technical-CV.pdf   (approved Technical CV; Teaching CV not published)
 ```
 
 ---
@@ -302,14 +301,12 @@ These were deliberately left out of the visible UI rather than guessed:
 1. **Publication DOI, volume, issue, and external link** — not present in the
    source CV. Add them to `src/content/publication.ts` once confirmed against
    the publisher record.
-2. **Rashad project** — described in the site brief with specific
-   capabilities, but not present in either source CV (Technical or Teaching).
-   Included on the site per the brief's explicit instructions, but flagged via
-   `reviewNote` in `projects.ts`. Recommend adding it to the CV for consistency.
-3. **Teaching learner/cohort counts** — an earlier draft of the Teaching CV
-   stated "500+ learners," but that figure does not appear in the original
-   source CV and could not be verified, so it was **excluded** from this site.
-   If you have a real, verifiable number, add it to `src/content/teaching.ts`.
+2. **Rashad project** — not one of the Technical CV's six Selected Client
+   Projects. Retained as an additional, non-featured project by decision on
+   2026-10-21 (see `reviewNote` in `projects.ts`).
+3. **Teaching learner/cohort counts** — the approved Technical CV states
+   "500+ engineers and students" trained; this appears in the About summary.
+   Per-cohort counts remain placeholders in the Teaching CV and are excluded.
 4. **Portfolio URL** — the site's own canonical URL is read from
    `NEXT_PUBLIC_SITE_URL` and must be set in Vercel once a domain is chosen.
 5. **English language proficiency** — intentionally not displayed anywhere on

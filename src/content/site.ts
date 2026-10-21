@@ -1,12 +1,12 @@
 export const siteConfig = {
   name: "Abdullah Wagih Ibrahim",
   shortName: "Abdullah Wagih",
-  title: "Abdullah Wagih | AI Solution Architect & Generative AI Engineer",
+  title: "Abdullah Wagih | AI Engineer | Generative AI Engineer",
   description:
-    "Portfolio of Abdullah Wagih, an AI Solution Architect and Generative AI Engineer designing enterprise LLM, RAG, AI-agent, computer vision, and intelligent automation platforms.",
+    "Portfolio of Abdullah Wagih, an AI Engineer and Generative AI Engineer with 3+ years of experience building enterprise AI products across LLMs, RAG, AI agents, computer vision, and NLP for clients in Egypt and Saudi Arabia.",
   tagline: "Architect. Builder. Educator.",
   supportingMessage:
-    "I architect production-ready AI platforms and help teams understand how to build them.",
+    "I engineer production-ready AI platforms and help teams understand how to build them.",
   // Resolved at build/runtime from the environment. Falls back to a relative
   // origin during local development so metadata never hard-codes a guessed domain.
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://abdullahwagih.example",
@@ -15,15 +15,13 @@ export const siteConfig = {
   phone: "+20 100 214 3879",
   linkedin: "https://linkedin.com/in/abdullah-wagih",
   linkedinLabel: "linkedin.com/in/abdullah-wagih",
-  roleLine: "AI Solution Architect at Rubix · AI Team Leader at Vitamera · AI Instructor · Cairo, Egypt",
+  roleLine: "AI Engineer at Rubix · AI Engineer at Vitamera · AI Instructor · Cairo, Egypt",
+  // The Teaching CV is intentionally not published until a reviewed edition
+  // without placeholders is approved.
   cv: {
     technical: {
-      href: "/Abdullah-Wagih-Technical-CV.docx",
+      href: "/Abdullah-Wagih-Technical-CV.pdf",
       label: "Download Technical CV",
-    },
-    teaching: {
-      href: "/Abdullah-Wagih-Teaching-CV.docx",
-      label: "Download Teaching CV",
     },
   },
   nav: [

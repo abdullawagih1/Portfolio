@@ -24,20 +24,20 @@ export function Hero() {
       <div className="container-page relative grid gap-14 py-20 sm:py-28 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-10">
         <div>
           <motion.p {...fade(0)} className="eyebrow">
-            AI Solution Architect · Generative AI Engineer
+            AI Engineer · Generative AI Engineer
           </motion.p>
 
           <h1 className="mt-5 max-w-xl font-display text-[34px] font-semibold leading-[1.12] tracking-tight text-ink sm:text-[46px] lg:text-[50px] dark:text-ink-inverse">
-            <WordReveal text="I architect AI systems that move from idea to production." delay={0.05} />
+            <WordReveal text="I build AI systems that move from idea to production." delay={0.05} />
           </h1>
 
           <motion.p
             {...fade(0.62)}
             className="mt-6 max-w-lg text-[16px] leading-relaxed text-ink-soft sm:text-[17px] dark:text-ink-inverse/75"
           >
-            I design production-ready AI platforms powered by LLMs, RAG, AI agents, computer
-            vision, and intelligent workflows — while leading teams and translating complex
-            business requirements into secure, scalable products.
+            I design, build, and ship AI products across LLMs, RAG, AI agents, computer vision,
+            and NLP — while leading teams and translating complex business requirements into
+            secure, scalable solutions.
           </motion.p>
 
           <motion.p
